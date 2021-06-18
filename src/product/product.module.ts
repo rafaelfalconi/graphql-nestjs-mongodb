@@ -5,9 +5,9 @@ import { ProductService } from './product.service';
 import { ProductResolver } from './product.resolver';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
-    ],
-    providers: [ProductService, ProductResolver]
+  imports: [
+    MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
+  ],
+  providers: [ProductService, ProductResolver],
 })
-export class ProductModule { }
+export class ProductModule {}

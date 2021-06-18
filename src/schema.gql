@@ -21,7 +21,25 @@ input ProductInput {
   price: Int
 }
 
+type Producto {
+  codigo: String
+  id: ID
+  nombre: String
+  precio: Float
+}
+
+type ProductoDto {
+  codigo: String
+  descuento: Float
+  iva: Float
+  nombre: String
+  precio: Float
+  precioFinal: Float
+}
+
 type Query {
   product(id: String!): Product!
+  productoPrecio(descuento: Float!, id: String!): ProductoDto!
+  productos: [Producto!]!
   products: [Product!]!
 }

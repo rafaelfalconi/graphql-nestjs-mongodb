@@ -6,37 +6,36 @@ import { Product, ProductDocument } from './schema/product.schema';
 
 @Injectable()
 export class ProductService {
-    constructor(@InjectModel('Product') private readonly productModel: Model<ProductDocument>) {
+  constructor(
+    @InjectModel('Product')
+    private readonly productModel: Model<ProductDocument>,
+  ) {}
 
-    }
+  async getProducts(): Promise<Product[]> {
+    return await this.productModel.find();
+  }
 
-    async getProducts(): Promise<Product[]> {
-        return await this.productModel.find();
-    }
+  async getProductByID(id: string): Promise<Product> {
+    return await this.productModel.findById(id);
+  }
 
-    async getProductByID(id: String): Promise<Product> {
-        return await this.productModel.findById(id);
-    }
+  async createProduct(productDto: ProductInput): Promise<Product> {
+    const product = new this.productModel(productDto);
+    return product.save();
+  }
 
-    async createProduct(productDto: ProductInput): Promise<Product> {
-        const product = new this.productModel(productDto);
-        return product.save();
-    }
+  async deleteProduct(id: string): Promise<any> {
+    const productDeleted = await this.productModel.findByIdAndDelete(id);
+    return productDeleted;
+  }
 
-    async deleteProduct(id: string): Promise<any> {
-        const productDeleted = await this.productModel.findByIdAndDelete(id);
-        return productDeleted;
-    }
-
-    async updateProduct(id: string, productDto: ProductInput): Promise<Product> {
-        const productUpdate = await this.productModel.findByIdAndUpdate(
-            id,
-            productDto,
-            { new: true },
-        );
-        productUpdate.save();
-        return productUpdate;
-    }
-
-
+  async updateProduct(id: string, productDto: ProductInput): Promise<Product> {
+    const productUpdate = await this.productModel.findByIdAndUpdate(
+      id,
+      productDto,
+      { new: true },
+    );
+    productUpdate.save();
+    return productUpdate;
+  }
 }
